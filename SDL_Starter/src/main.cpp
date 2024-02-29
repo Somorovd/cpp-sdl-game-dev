@@ -9,13 +9,13 @@ int main(int argc, char* argv[])
 	{
 		window = SDL_CreateWindow(
 			"SDL Starter",
-			SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,
-			1000, 800, 
+			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+			1000, 800,
 			SDL_WINDOW_SHOWN
 		);
 
 		renderer = SDL_CreateRenderer(window, -1, 0);
-	} 
+	}
 	else
 	{
 		return 1;
