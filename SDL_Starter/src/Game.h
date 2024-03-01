@@ -20,6 +20,11 @@ private:
 
 	SDL_Window* m_window = 0;
 	SDL_Renderer* m_renderer = 0;
+
+	SDL_Texture* m_texture = 0;
+	SDL_Rect m_srcRect;
+	SDL_Rect m_destRect;
+
 	bool m_running = false;
 
 };
