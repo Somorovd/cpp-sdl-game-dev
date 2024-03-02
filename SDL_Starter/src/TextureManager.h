@@ -20,9 +20,9 @@ public:
 
 private:
 
+	static TextureManager* s_instance;
+
 	TextureManager();
 
-	static TextureManager* s_instance;
 	std::map<std::string, SDL_Texture*> m_textureMap;
-
 };

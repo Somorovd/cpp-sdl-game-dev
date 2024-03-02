@@ -1,14 +1,24 @@
 #include "Game.h"
 #include "iostream"
+#include "LoaderParams.h"
+#include "Player.h"
 #include "SDL_image.h"
 #include "TextureManager.h"
 
-Game::Game()
-{
-}
+Game* Game::s_instance = 0;
 
-Game::~Game()
+Game::Game() {}
+
+Game::~Game() {}
+
+Game* Game::Instance()
 {
+	if (s_instance == 0)
+	{
+		s_instance = new Game();
+	}
+
+	return s_instance;
 }
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
@@ -54,6 +64,10 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 	TextureManager::Instance()->load("assets/walk-basic.png", "walk-basic", m_renderer);
 
+	m_gameObjects.push_back(new Player(new LoaderParams(
+		300, 300, 64, 128, "walk-basic"
+	)));
+
 	return true;
 }
 
@@ -61,14 +75,20 @@ void Game::render()
 {
 	SDL_RenderClear(m_renderer);
 
-	TextureManager::Instance()->drawFrame("walk-basic", 0, 0, 64, 128, 1, m_currentFrame, m_renderer);
+	for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->draw();
+	}
 
 	SDL_RenderPresent(m_renderer);
 }
 
 void Game::update()
 {
-	m_currentFrame = ((SDL_GetTicks() / 100) % 9) + 1;
+	for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->update();
+	}
 }
 
 void Game::handleEvents()

@@ -1,11 +1,14 @@
 #pragma once
+#include "GameObject.h"
 #include "SDL.h"
+#include "vector"
 
 class Game
 {
 public:
 
-	Game();
+	static Game* Instance();
+
 	~Game();
 
 	bool init(const char* title, int xpos, int ypos, int width, int height, int flags);
@@ -15,8 +18,13 @@ public:
 	void clean();
 
 	bool running() { return m_running; }
+	SDL_Renderer* getRenderer() const { return m_renderer; }
 
 private:
+
+	static Game* s_instance;
+
+	Game();
 
 	SDL_Window* m_window = 0;
 	SDL_Renderer* m_renderer = 0;
@@ -24,5 +32,6 @@ private:
 	bool m_running = false;
 	int m_currentFrame;
 
+	std::vector<GameObject*> m_gameObjects;
 };
 
