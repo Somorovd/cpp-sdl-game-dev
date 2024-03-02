@@ -15,7 +15,8 @@ public:
 
 protected:
 
-	Vector2 m_pos;
+	Vector2 m_pos, m_vel, m_acc;
+
 	int m_width, m_height;
 	int m_currentRow, m_currentFrame;
 	std::string m_textureID;
