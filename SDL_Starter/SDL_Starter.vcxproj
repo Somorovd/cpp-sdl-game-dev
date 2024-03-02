@@ -160,6 +160,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SDLGameObject.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

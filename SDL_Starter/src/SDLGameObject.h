@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "string"
+#include "Vector2.h"
 
 class SDLGameObject : public GameObject
 {
@@ -14,7 +15,8 @@ public:
 
 protected:
 
-	int m_x, m_y, m_width, m_height;
+	Vector2 m_pos;
+	int m_width, m_height;
 	int m_currentRow, m_currentFrame;
 	std::string m_textureID;
 };
