@@ -4,7 +4,13 @@
 
 InputHandler* InputHandler::s_instance = 0;
 
-InputHandler::InputHandler() {}
+InputHandler::InputHandler() : m_mousePosition(0, 0)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		m_mouseButtonStates.push_back(false);
+	}
+}
 
 InputHandler::~InputHandler() {}
 
@@ -42,6 +48,7 @@ void InputHandler::update()
 	{
 		int joy = event.jaxis.which;
 		int val = getJoyValue01(event.jaxis.value);
+		int button = event.button.button - 1; // from 1-3 to 0-2
 
 		switch (event.type)
 		{
@@ -77,6 +84,16 @@ void InputHandler::update()
 			break;
 		case SDL_JOYBUTTONUP:
 			m_buttonStates[joy][event.jbutton.button] = false;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			m_mouseButtonStates[button] = true;
+			break;
+		case SDL_MOUSEBUTTONUP:
+			m_mouseButtonStates[button] = false;
+			break;
+		case SDL_MOUSEMOTION:
+			m_mousePosition.setX(event.motion.x);
+			m_mousePosition.setY(event.motion.y);
 			break;
 		default:
 			break;
@@ -123,7 +140,7 @@ void InputHandler::initializeJoysticks()
 		SDL_JoystickEventState(SDL_ENABLE);
 		m_joysticksInitialized = true;
 
-		std::cout << "initialized " << m_joysticks.size() << " joystick(s)";
+		std::cout << "initialized " << m_joysticks.size() << " joystick(s)" << std::endl;
 	}
 	else
 	{
@@ -164,4 +181,9 @@ int InputHandler::yvalue(int joy, int stick)
 bool InputHandler::getButtonState(int joy, int buttonNumber)
 {
 	return m_buttonStates[joy][buttonNumber];
+}
+
+bool InputHandler::getMouseButtonState(int buttonNumber)
+{
+	return m_mouseButtonStates[buttonNumber];
 }

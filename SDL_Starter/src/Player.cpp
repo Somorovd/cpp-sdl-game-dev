@@ -79,4 +79,9 @@ void Player::handleInput()
 	{
 		std::cout << "button 3" << std::endl;
 	}
+
+	if (input->getMouseButtonState(LEFT))
+	{
+		std::cout << "left click" << std::endl;
+	}
 }
