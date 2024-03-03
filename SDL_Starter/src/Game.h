@@ -16,6 +16,7 @@ public:
 	void update();
 	void handleEvents();
 	void clean();
+	void quit();
 
 	bool running() { return m_running; }
 	SDL_Renderer* getRenderer() const { return m_renderer; }

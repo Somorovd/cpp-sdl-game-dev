@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "InputHandler.h"
 #include "iostream"
 #include "LoaderParams.h"
 #include "Player.h"
@@ -62,6 +63,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	std::cout << "init success" << std::endl;
 	m_running = true;
 
+	InputHandler::Instance()->initializeJoysticks();
+
 	TextureManager::Instance()->load("assets/walk-basic.png", "walk-basic", m_renderer);
 
 	m_gameObjects.push_back(new Player(new LoaderParams(
@@ -93,24 +96,19 @@ void Game::update()
 
 void Game::handleEvents()
 {
-	SDL_Event event;
-	if (SDL_PollEvent(&event))
-	{
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			m_running = false;
-			break;
-		default:
-			break;
-		}
-	}
+	InputHandler::Instance()->update();
 }
 
 void Game::clean()
 {
 	std::cout << "cleaning game" << std::endl;
+	InputHandler::Instance()->clean();
 	SDL_DestroyWindow(m_window);
 	SDL_DestroyRenderer(m_renderer);
 	SDL_Quit();
+}
+
+void Game::quit()
+{
+	m_running = false;
 }
