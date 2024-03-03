@@ -84,4 +84,21 @@ void Player::handleInput()
 	{
 		std::cout << "left click" << std::endl;
 	}
+
+	if (input->isKeyDown(SDL_SCANCODE_W))
+	{
+		m_vel.setY(-2);
+	}
+	if (input->isKeyDown(SDL_SCANCODE_A))
+	{
+		m_vel.setX(-2);
+	}
+	if (input->isKeyDown(SDL_SCANCODE_S))
+	{
+		m_vel.setY(2);
+	}
+	if (input->isKeyDown(SDL_SCANCODE_D))
+	{
+		m_vel.setX(2);
+	}
 }

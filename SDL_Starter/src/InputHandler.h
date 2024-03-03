@@ -29,6 +29,8 @@ public:
 	bool getMouseButtonState(int buttonNumber);
 	Vector2 getMousePosition() { return m_mousePosition; }
 
+	bool isKeyDown(SDL_Scancode key);
+
 private:
 
 	static InputHandler* s_instance;
@@ -36,6 +38,16 @@ private:
 	InputHandler();
 	~InputHandler();
 
+	void onKeyDown();
+	void onKeyUp();
+
+	void onMouseMove(SDL_Event& event);
+	void onMouseButtonDown(SDL_Event& event);
+	void onMouseButtonUp(SDL_Event& event);
+
+	void onJoystickAxisMove(SDL_Event& event);
+	void onJoystickButtonDown(SDL_Event& event);
+	void onJoystickButtonUp(SDL_Event& event);
 	int getJoyValue01(int v);
 
 	bool m_joysticksInitialized = false;
@@ -46,5 +58,9 @@ private:
 
 	std::vector<bool> m_mouseButtonStates;
 	Vector2 m_mousePosition;
+
+	// pointer to an array of keystates from SDL_GetKeysboardState(...)
+	const Uint8* m_keystates;
+
 };
 
