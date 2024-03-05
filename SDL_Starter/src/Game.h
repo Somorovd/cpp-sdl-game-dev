@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "GameStateMachine.h"
 #include "SDL.h"
 #include "vector"
 
@@ -29,6 +30,8 @@ private:
 
 	SDL_Window* m_window = 0;
 	SDL_Renderer* m_renderer = 0;
+
+	GameStateMachine* m_gameStateMachine;
 
 	bool m_running = false;
 	int m_currentFrame;

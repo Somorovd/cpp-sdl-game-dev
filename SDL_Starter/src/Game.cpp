@@ -2,7 +2,9 @@
 #include "InputHandler.h"
 #include "iostream"
 #include "LoaderParams.h"
+#include "MenuState.h"
 #include "Player.h"
+#include "PlayState.h"
 #include "SDL_image.h"
 #include "TextureManager.h"
 
@@ -64,8 +66,10 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	m_running = true;
 
 	InputHandler::Instance()->initializeJoysticks();
-
 	TextureManager::Instance()->load("assets/walk-basic.png", "walk-basic", m_renderer);
+
+	m_gameStateMachine = new GameStateMachine();
+	m_gameStateMachine->changeState(new MenuState());
 
 	m_gameObjects.push_back(new Player(new LoaderParams(
 		300, 300, 64, 128, "walk-basic"
@@ -77,26 +81,33 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 void Game::render()
 {
 	SDL_RenderClear(m_renderer);
+	//for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
 
-	for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->draw();
-	}
+	//{
+	//	m_gameObjects[i]->draw();
+	//}
+	m_gameStateMachine->render();
 
 	SDL_RenderPresent(m_renderer);
 }
 
 void Game::update()
 {
-	for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->update();
-	}
+	//for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
+	//{
+	//	m_gameObjects[i]->update();
+	//}
+	m_gameStateMachine->update();
 }
 
 void Game::handleEvents()
 {
 	InputHandler::Instance()->update();
+
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN))
+	{
+		m_gameStateMachine->changeState(new PlayState());
+	}
 }
 
 void Game::clean()
