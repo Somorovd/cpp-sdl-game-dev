@@ -1,10 +1,12 @@
 #include "InputHandler.h"
 #include "MenuButton.h"
 
-MenuButton::MenuButton(const LoaderParams* params) :
-	SDLGameObject(params)
+MenuButton::MenuButton(const LoaderParams* params, void (*callback)()) :
+	SDLGameObject(params),
+	m_callback(callback)
 {
-	m_currentFrame = MOUSE_OUT;
+	m_currentFrame = 0;
+	m_currentRow = MOUSE_OUT;
 }
 
 void MenuButton::draw()
@@ -23,16 +25,23 @@ void MenuButton::update()
 		&& mousePos.getY() > m_pos.getY()
 		)
 	{
-		m_currentFrame = MOUSE_OVER;
+		bool isLeftClick = InputHandler::Instance()->getMouseButtonState(LEFT);
 
-		if (InputHandler::Instance()->getMouseButtonState(LEFT))
+		if (isLeftClick && m_released)
 		{
-			m_currentFrame = CLICKED;
+			m_currentRow = CLICKED;
+			m_callback();
+			m_released = false;
+		}
+		else if (!isLeftClick)
+		{
+			m_released = true;
+			m_currentRow = MOUSE_OVER;
 		}
 	}
 	else
 	{
-		m_currentFrame = MOUSE_OUT;
+		m_currentRow = MOUSE_OUT;
 	}
 }
 

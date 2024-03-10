@@ -48,7 +48,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 				std::cout << "renderer creation fail" << std::endl;
 				return false;
 			}
-
 		}
 		else
 		{
@@ -66,14 +65,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	m_running = true;
 
 	InputHandler::Instance()->initializeJoysticks();
-	TextureManager::Instance()->load("assets/walk-basic.png", "walk-basic", m_renderer);
 
 	m_gameStateMachine = new GameStateMachine();
 	m_gameStateMachine->changeState(new MenuState());
-
-	m_gameObjects.push_back(new Player(new LoaderParams(
-		300, 300, 64, 128, "walk-basic"
-	)));
 
 	return true;
 }

@@ -2,6 +2,7 @@
 #include "iostream"
 #include "MenuButton.h"
 #include "MenuState.h"
+#include "PlayState.h"
 #include "TextureManager.h"
 
 const std::string MenuState::s_menuID = "MENU";
@@ -35,8 +36,14 @@ bool MenuState::onEnter()
 		return false;
 	}
 
-	GameObject* button1 = new MenuButton(new LoaderParams(100, 100, 128, 64, "play-button"));
-	GameObject* button2 = new MenuButton(new LoaderParams(100, 300, 128, 64, "exit-button"));
+	GameObject* button1 = new MenuButton(
+		new LoaderParams(100, 100, 128, 64, "play-button"),
+		s_menuToPlay
+	);
+	GameObject* button2 = new MenuButton(
+		new LoaderParams(100, 300, 128, 64, "exit-button"),
+		s_exitFromMenu
+	);
 
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
@@ -59,4 +66,16 @@ bool MenuState::onExit()
 
 	std::cout << "exiting MenuState" << std::endl;
 	return true;
+}
+
+void MenuState::s_menuToPlay()
+{
+	std::cout << "Play Button Clicked" << std::endl;
+	Game::Instance()->getStateMachine()->changeState(new PlayState());
+}
+
+void MenuState::s_exitFromMenu()
+{
+	std::cout << "Exit Button Clicked" << std::endl;
+	Game::Instance()->quit();
 }

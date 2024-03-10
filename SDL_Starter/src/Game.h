@@ -21,6 +21,7 @@ public:
 
 	bool running() { return m_running; }
 	SDL_Renderer* getRenderer() const { return m_renderer; }
+	GameStateMachine* getStateMachine() const { return m_gameStateMachine; }
 
 private:
 
